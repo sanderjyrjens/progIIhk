@@ -41,7 +41,7 @@ app.get('/api/users', (req, res) => {
 //REquired: id
 //Optional: none
 app.get('/api/users/:id', (req, res) => {
-    console.log(req.params.id);
+    // console.log(req.params.id);
     res.status(200).json({
         success: true,
         user: users[req.params.id]
@@ -72,6 +72,7 @@ app.post('/api/users', (req, res) => {
 
         res.status(201).json({
             success: true,
+            user: newUser
             
         });
 
@@ -104,7 +105,11 @@ app.put('/api/users', (req, res) => {
             users[id].email = email;
         }if (password) {
             users[id].password = password;
-        }
+        };
+        res.status(200).json({
+            success: true,
+            user: users[id]
+        });
     } else {
         res.status(400).json({
             success: false,
@@ -112,6 +117,25 @@ app.put('/api/users', (req, res) => {
         });
     }
 
+});
+
+//DELTE -users
+//Required: id
+// Optional: none
+
+app.delete('api/users', (req, res) => {
+    const id = typeof(req.body.id) === 'number' ? req.body.id : false;
+    if(id || id === 0) {
+        users.splice(id, 1);
+        res.status(200).json({
+            success: true
+        });
+    } else {
+        res.status(400).json({
+            success: false,
+            message: 'Required field(s) missing or invalid'
+        });
+    }
 });
 
 app.listen(3000, () => {
