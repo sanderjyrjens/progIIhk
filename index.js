@@ -83,6 +83,37 @@ app.post('/api/users', (req, res) => {
     }
 });
 
+// PUT - users
+// Required: id
+// Optional: firstName, lastName, email, password
+app.put('/api/users'. (req, res) => {
+    console.log(req.body);
+    const id = typeof(req.body.id) === 'number' ? req.body.id : false;
+    const firstName = typeof(req.body.firstName) === 'string' && req.body.firstName.trim().length > 0 ? req.body.firstName :  false;
+    const lastName = typeof(req.body.lastName) === 'string' && req.body.lastName.trim().length > 0 ? req.body.lastName :  false;
+    const email = typeof(req.body.email) === 'string' && req.body.email.trim().length > 0 ? req.body.email :  false;
+    const password = typeof(req.body.password) === 'string' && req.body.password.trim().length > 0 ? req.body.password :  false;
+
+    if(id) {
+        if (firstName) {
+            users[id].firstName = firstName;
+        }
+        if (lastName) {
+            users[id].lastName = lastName;
+        }if (email) {
+            users[id].email = email;
+        }if (password) {
+            users[id].password = password;
+        }
+    } else {
+        res.status(400).json({
+            success: false,
+            message: 'Required field(s) missing or invalid'
+        });
+    }
+
+});
+
 app.listen(3000, () => {
     console.log('Server running');
 });
