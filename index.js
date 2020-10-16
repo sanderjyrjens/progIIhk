@@ -86,7 +86,7 @@ app.post('/api/users', (req, res) => {
 // PUT - users
 // Required: id
 // Optional: firstName, lastName, email, password
-app.put('/api/users'. (req, res) => {
+app.put('/api/users', (req, res) => {
     console.log(req.body);
     const id = typeof(req.body.id) === 'number' ? req.body.id : false;
     const firstName = typeof(req.body.firstName) === 'string' && req.body.firstName.trim().length > 0 ? req.body.firstName :  false;
@@ -94,7 +94,7 @@ app.put('/api/users'. (req, res) => {
     const email = typeof(req.body.email) === 'string' && req.body.email.trim().length > 0 ? req.body.email :  false;
     const password = typeof(req.body.password) === 'string' && req.body.password.trim().length > 0 ? req.body.password :  false;
 
-    if(id) {
+    if(id || id === 0) {
         if (firstName) {
             users[id].firstName = firstName;
         }
